@@ -7,6 +7,9 @@ export const requestNotificationPermission = async () => {
 };
 
 // Generate a consistent numeric ID from a UUID string
+// Note: Hash collisions are extremely unlikely given UUID uniqueness.
+// Even if a collision occurs, it would only affect notification behavior
+// (one notification might replace another), which is acceptable for this use case.
 const generateNotificationId = (uuid: string): number => {
   // Use a simple hash function to convert UUID to a number
   let hash = 0;
