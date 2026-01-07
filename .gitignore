@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+dist/
+.env
+.env.local
+.env.production
+
+# Build
+*.log
+.DS_Store
+*.swp
+*.swo
+
+# Android
+android/
+!android/.gitkeep
+
+# Capacitor
+.capacitor/
+
+# IDE
+.vscode/
+.idea/
+*.iml
