@@ -6,8 +6,28 @@ export const requestNotificationPermission = async () => {
   return permission.display === 'granted';
 };
 
+// Generate a consistent numeric ID from a UUID string
+const generateNotificationId = (uuid: string): number => {
+  // Use a simple hash function to convert UUID to a number
+  let hash = 0;
+  for (let i = 0; i < uuid.length; i++) {
+    const char = uuid.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash = hash & hash; // Convert to 32-bit integer
+  }
+  // Ensure positive integer
+  return Math.abs(hash);
+};
+
 export const scheduleNotification = async (todo: Todo) => {
   if (!todo.reminderTime) return;
+
+  // Validate time format
+  const timeRegex = /^([0-1]?[0-9]|2[0-3]):([0-5][0-9])$/;
+  if (!timeRegex.test(todo.reminderTime)) {
+    console.error('Invalid time format. Expected HH:MM');
+    return;
+  }
 
   const granted = await requestNotificationPermission();
   if (!granted) {
@@ -30,7 +50,7 @@ export const scheduleNotification = async (todo: Todo) => {
       {
         title: '⏰ Hatırlatıcı',
         body: todo.text,
-        id: parseInt(todo.id.replace(/\D/g, '').slice(0, 9)),
+        id: generateNotificationId(todo.id),
         schedule: { at: scheduledTime },
         sound: 'default',
         // Note: ic_stat_icon should be added to android/app/src/main/res/drawable/
@@ -43,6 +63,6 @@ export const scheduleNotification = async (todo: Todo) => {
 };
 
 export const cancelNotification = async (todoId: string) => {
-  const id = parseInt(todoId.replace(/\D/g, '').slice(0, 9));
+  const id = generateNotificationId(todoId);
   await LocalNotifications.cancel({ notifications: [{ id }] });
 };
