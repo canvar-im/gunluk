@@ -10,6 +10,18 @@ interface Todo {
   reminderTime?: string;
 }
 
+// Helper function to generate consistent notification IDs from todo IDs
+const getNotificationId = (todoId: string): number => {
+  // Use a simple hash of the UUID to get a consistent number
+  let hash = 0;
+  for (let i = 0; i < todoId.length; i++) {
+    const char = todoId.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash = hash & hash; // Convert to 32-bit integer
+  }
+  return Math.abs(hash);
+};
+
 function App() {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [inputValue, setInputValue] = useState('');
@@ -67,7 +79,7 @@ function App() {
       const isNative = await NotificationService.checkPlatform();
       if (isNative) {
         await NotificationService.scheduleNotification(
-          parseInt(newTodo.id.replace(/-/g, '').substring(0, 8), 16),
+          getNotificationId(newTodo.id),
           'Günlük Dostum Hatırlatıcı',
           newTodo.text,
           scheduledDate
@@ -84,9 +96,7 @@ function App() {
   const deleteTodo = async (id: string) => {
     const isNative = await NotificationService.checkPlatform();
     if (isNative) {
-      await NotificationService.cancelNotification(
-        parseInt(id.replace(/-/g, '').substring(0, 8), 16)
-      );
+      await NotificationService.cancelNotification(getNotificationId(id));
     }
     setTodos(todos.filter(t => t.id !== id));
   };
@@ -108,11 +118,9 @@ function App() {
 
     const isNative = await NotificationService.checkPlatform();
     if (isNative) {
-      await NotificationService.cancelNotification(
-        parseInt(id.replace(/-/g, '').substring(0, 8), 16)
-      );
+      await NotificationService.cancelNotification(getNotificationId(id));
       await NotificationService.scheduleNotification(
-        parseInt(id.replace(/-/g, '').substring(0, 8), 16),
+        getNotificationId(id),
         'Günlük Dostum Hatırlatıcı',
         todo.text,
         newScheduledDate
