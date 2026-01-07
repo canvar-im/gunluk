@@ -33,6 +33,8 @@ export const scheduleNotification = async (todo: Todo) => {
         id: parseInt(todo.id.replace(/\D/g, '').slice(0, 9)),
         schedule: { at: scheduledTime },
         sound: 'default',
+        // Note: ic_stat_icon should be added to android/app/src/main/res/drawable/
+        // If not provided, Android will use the default notification icon
         smallIcon: 'ic_stat_icon',
         iconColor: '#6366f1'
       }

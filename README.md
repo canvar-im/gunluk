@@ -70,6 +70,14 @@ Günlük işlerinizi takip etmeniz için bir hatırlatıcı uygulaması. Web ve 
    - Üst menüden bir emülatör veya cihaz seçin
    - Yeşil "Run" butonuna basın ▶️
 
+### Bildirim İkonu (Opsiyonel):
+
+Bildirimlerin düzgün görünmesi için özel bir ikon ekleyebilirsiniz:
+
+1. `android/app/src/main/res/drawable/` klasörüne `ic_stat_icon.png` dosyası ekleyin
+2. İkon 24x24 dp, beyaz ve şeffaf arka planlı olmalı
+3. Eğer ikon eklemezseniz, varsayılan Android bildirimi ikonu kullanılır
+
 ### APK Oluşturma:
 
 Android Studio'da:
