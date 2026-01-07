@@ -21,6 +21,8 @@ export class NotificationService {
             body,
             schedule: { at: scheduledTime },
             sound: 'default',
+            // NOTE: Update 'ic_stat_icon_config_sample' to your actual icon resource name
+            // after adding the icon to android/app/src/main/res/drawable/
             smallIcon: 'ic_stat_icon_config_sample',
             iconColor: '#4F46E5',
             extra: { todoId: id }

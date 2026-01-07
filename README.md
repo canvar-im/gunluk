@@ -183,6 +183,8 @@ npm run android:sync
 - API anahtarları `.env.local` dosyasında saklanır
 - `.env.local` dosyası `.gitignore`'a eklenmiştir
 - Production build'de environment variables güvenli şekilde inject edilir
+- **ÖNEMLİ:** Gemini API anahtarı client-side kodda kullanılmaktadır. Production ortamında API anahtarını korumak için backend proxy kullanmayı düşünün.
+- Android APK'da API anahtarı build time'da gömülür - hassas uygulamalar için backend proxy önerilir
 
 ## 🤝 Katkıda Bulunma
 

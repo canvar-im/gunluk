@@ -133,6 +133,8 @@ function App() {
     
     setLoading(true);
     try {
+      // NOTE: In production, consider using a backend proxy to protect the API key
+      // For mobile apps, the key is bundled at build time
       const apiKey = process.env.GEMINI_API_KEY;
       if (!apiKey) {
         setAiSuggestion('API anahtarı bulunamadı. Lütfen .env.local dosyasını kontrol edin.');

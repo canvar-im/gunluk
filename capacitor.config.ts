@@ -18,6 +18,7 @@ const config: CapacitorConfig = {
       splashImmersive: true
     },
     LocalNotifications: {
+      // NOTE: Update to your actual icon resource name after adding to Android project
       smallIcon: "ic_stat_icon_config_sample",
       iconColor: "#4F46E5"
     }
